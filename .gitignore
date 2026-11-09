@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+build/
+dist/
+# estado local do policy-guard (propostas guardam argumentos completos)
+.policy-guard/
+# settings gerado pelo `install` tem caminho absoluto da máquina
+examples/demo/.claude/settings.json
+examples/demo/.claude/settings.json.bak-*
+examples/demo/.claude/settings.local.json
+examples/todo-mcp/todos.json
+examples/demo/workspace/*
+!examples/demo/workspace/.gitkeep
+.env
+*.har

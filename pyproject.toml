@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claude-code-policy-guard"
+version = "0.1.0"
+description = "Guardrails determinísticos e aprovação humana para agentes do Claude Code (hook PreToolUse)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Renato Brito" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+policy-guard = "policy_guard.cli:main"
+
+[tool.setuptools]
+packages = ["policy_guard"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
