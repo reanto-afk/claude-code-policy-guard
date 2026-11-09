@@ -1,0 +1,54 @@
+# Política de exemplo do policy-guard.
+# A primeira regra cujo `tools` casa E cujas restrições (paths/commands) passam decide.
+# Nenhuma regra casou: vale `default`.
+version = 1
+default = "deny"           # o que não está escrito aqui é bloqueado
+mode = "headless"          # headless: "approve" vira proposta | interactive: vira o prompt nativo
+mutation_budget = 3        # no máximo 3 ações que mudam dados por sessão
+proposal_ttl_hours = 24    # proposta não respondida expira
+
+[[rule]]
+name = "leitura livre"
+tools = ["Read", "Glob", "Grep", "LS"]
+decision = "allow"
+
+[[rule]]
+name = "ferramentas internas do Claude Code"
+tools = ["TodoWrite", "ToolSearch"]
+decision = "allow"
+
+[[rule]]
+name = "escrita só em workspace/"
+tools = ["Write", "Edit", "MultiEdit"]
+paths = ["workspace/*"]
+decision = "allow"
+
+[[rule]]
+name = "bash: comandos seguros"
+tools = ["Bash"]
+commands = ["ls", "cat", "git status", "git diff", "git log", "python -m pytest"]
+decision = "allow"
+
+[[rule]]
+name = "bash: git push precisa de humano"
+tools = ["Bash"]
+commands = ["git push"]
+decision = "approve"
+
+[[rule]]
+name = "MCP: leitura"
+tools = ["mcp__*__list_*", "mcp__*__get_*", "mcp__*__search_*"]
+decision = "allow"
+
+[[rule]]
+name = "MCP: criar tarefa"
+tools = ["mcp__todo__create_todo"]
+decision = "allow"
+mutation = true
+
+[[rule]]
+name = "MCP: apagar precisa de humano"
+tools = ["mcp__*__delete_*"]
+decision = "approve"
+mutation = true
+entity_arg = "id"

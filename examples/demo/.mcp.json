@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "todo": {
+      "command": "python",
+      "args": ["../todo-mcp/server.py"]
+    }
+  }
+}
